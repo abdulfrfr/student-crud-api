@@ -1,0 +1,59 @@
+{
+    "info": {
+        "name": "Student CRUD API",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Create Student",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n\t\"name\": \"John Doe\",\n\t\"age\": 22,\n\t\"grade\": \"A\"\n}"
+                },
+                "url": {
+                    "raw": "http://localhost:8080/api/v1/students",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": [
+                        "api",
+                        "v1",
+                        "students"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get All Students",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:8080/api/v1/students",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": [
+                        "api",
+                        "v1",
+                        "students"
+                    ]
+                }
+            },
+            "response": []
+        }
+    ]
+}
