@@ -7,9 +7,12 @@ pipeline{
         }
 
         stage('build'){
-            sh '''
+            steps{
+                sh '''
                 docker build -t student-crud-api .
-            '''
+                '''
+            }
+            
         }
     }
 }
