@@ -9,6 +9,7 @@ import (
 )
 
 func main() {
+
 	router := gin.Default()
 
 	// Connect to database
@@ -28,6 +29,11 @@ func main() {
 		c.JSON(200, gin.H{"status": "UP"})
 	})
 
+	port := os.Getenv("PORT")
+
+	if port == "" {
+		port = "8080"
+	}
 	// Run the server
-	router.Run(":" + os.Getenv("PORT"))
+	router.Run(":" + port)
 }

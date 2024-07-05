@@ -9,9 +9,14 @@
 # https://github.com/docker/awesome-compose
 services:
   server:
-    build:
-      context: .
-      target: final
+    image: student-crud-api
+    environment:
+      - PORT=8080
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=abdulfrfr_user
+      - DB_PASSWORD=abdulfrfr
+      - DB_NAME=abdulfrfr
     ports:
       - 8080:8080
 
@@ -26,25 +31,15 @@ services:
         condition: service_healthy
   db:
     image: postgres
-    restart: always
-    user: postgres
-    secrets:
-      - db-password
-    volumes:
-      - db-data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=example
-      - POSTGRES_PASSWORD_FILE=/run/secrets/db-password
-    expose:
-      - 5432
+      - POSTGRES_USER=abdulfrfr_user
+      - POSTGRES_PASSWORD=abdulfrfr
+      - POSTGRES_DB=abdulfrfr
+    ports:
+      - "5432:5432"
     healthcheck:
       test: [ "CMD", "pg_isready" ]
       interval: 10s
       timeout: 5s
       retries: 5
-volumes:
-  db-data:
-secrets:
-  db-password:
-    file: db/password.txt
 
