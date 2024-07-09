@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: student-crud-api-deployment
+  labels:
+    app: student-crud-api
+spec:
+  selector:
+    matchLabels:
+      app: student-crud-api
+  template:
+    metadata:
+      labels:
+        app: student-crud-api
+    spec:
+      containers:
+      - name: student-crud-api
+        image: abdulfrfr/student-crud-api:latest
+        env:
+          - name: DB_HOST
+            value: student-crud-api-db-svc
+          - name: DB_PASSWORD
+            value: abdulfrfr
+          - name: DB_USER
+            value: abdulfrfr_user
+          - name: PORT
+            value: "8080"
+          - name: DB_NAME
+            value: abdulfrfr
+          - name: DB_PORT
+            value: "5432"
+          - name: GIN_MODE
+            value: release
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8080
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: student-crud-api-svc
+spec:
+  selector:
+    app: student-crud-api
+  ports:
+  - port: 80
+    targetPort: 8080
+    protocol: TCP
+

@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: student-crud-api-db
+  labels:
+    app: student-crud-api-db-l
+spec:
+  selector:
+    matchLabels:
+      app: student-crud-api-db-l
+  serviceName: student-crud-api-db-svc
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: student-crud-api-db-l
+    spec:
+      containers:
+      - name: student-crud-api-db
+        image: postgres:latest
+        env:
+          - name: POSTGRES_DB
+            value: "abdulfrfr"
+          - name: POSTGRES_USER
+            value: "abdulfrfr_user"
+          - name: POSTGRES_PASSWORD
+            value: "abdulfrfr"
+        ports:
+        - containerPort: 5432
+          name: web
+        volumeMounts:
+        - name: db-pvc
+          mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: db-pvc
+        persistentVolumeClaim:
+          claimName: student-crud-api-pvc
+  volumeClaimTemplates: []
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: student-crud-api-db-svc
+spec:
+  selector:
+    app: student-crud-api-db-l
+  ports:
+  - port: 5432
+    targetPort: 5432
+    protocol: TCP
+
